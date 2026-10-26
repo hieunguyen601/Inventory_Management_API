@@ -73,26 +73,33 @@ app.get("/api/inventory", async (req, res) => {
 });
 
 app.patch("/api/inventory/:id", async (req, res) => {
+  const { id } = req.params;
+  const { quantity } = req.body;
+
+  if (quantity === undefined || quantity === null || isNaN(quantity)) {
+    return res.status(400).json({
+      message: "Valid quantity required",
+    });
+  }
+
   try {
-    const { id } = req.params;
-    const { price, quantity } = req.params;
 
     const result = await pool.query(
       `
             UPDATE inventory
-            SET price = $1, quantity = $2
-            WHERE id = $3 RETURNING *;
+            SET quantity = $1
+            WHERE id = $2 RETURNING *;
             `,
-      [price, quantity, id],
+      [quantity, id],
     );
 
-    if ((!price, !quantity)) {
-      return res.status(400).json({
-        message: "Price and quantity required",
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        message: "Item not found",
       });
     }
 
-    res.status(201).json({
+    res.status(200).json({
       message: "Update inventory successfully",
       data: result.rows[0],
     });
@@ -106,8 +113,8 @@ app.patch("/api/inventory/:id", async (req, res) => {
 
 app.delete("/api/inventory/:id", async (req, res) => {
   try {
-    const { id } = id;
-    const result = await query.pool(
+    const { id } = req.params;
+    const result = await pool.query(
       `
             DELETE FROM inventory
             WHERE id=$1
