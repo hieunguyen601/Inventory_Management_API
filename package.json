@@ -1,0 +1,20 @@
+{
+  "name": "inventory_management_api",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Henry Nguyen",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "test": "node server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.3.0",
+    "pg": "^8.23.1",
+    "supertest": "^7.3.1",
+    "vitest": "^5.0.5"
+  }
+}
