@@ -33,8 +33,7 @@ app.post("/api/inventory", async (req, res) => {
             price,
             quantity
             ) VALUES (
-            $1, $2, $3 RETURNING *
-            )
+            $1, $2, $3) RETURNING *
             `,
       [name, price, quantity],
     );
@@ -64,10 +63,7 @@ app.get("/api/inventory", async (req, res) => {
       });
     }
 
-    res.status(200).json({
-      message: "Fetch data successfully",
-      data: result.rows[0],
-    });
+    res.status(200).json(result.rows);
   } catch (error) {
     console.error("Can't process the inventory", error);
     res.status(500).json({
@@ -76,7 +72,7 @@ app.get("/api/inventory", async (req, res) => {
   }
 });
 
-app.patch("/api/inventory", async (req, res) => {
+app.patch("/api/inventory/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { price, quantity } = req.params;
@@ -108,7 +104,7 @@ app.patch("/api/inventory", async (req, res) => {
   }
 });
 
-app.delete("/api/inventory", async (req, res) => {
+app.delete("/api/inventory/:id", async (req, res) => {
   try {
     const { id } = id;
     const result = await query.pool(
