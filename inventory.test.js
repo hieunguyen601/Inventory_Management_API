@@ -25,3 +25,13 @@ test("POST /api/inventory create a new item", async () => {
   const response = await request(app).post("/api/inventory").send(newItem);
   expect(response.status).toBe(201);
 });
+
+
+test("PATCH /api/inventory:id updates an item", async () => {
+    const updatedQuantity = {
+        quantity: "30"
+    };
+
+    const response = await request(app).patch("/api/inventory/9").send(updatedQuantity);
+    expect(response.status).toBe(200);
+})
