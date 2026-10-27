@@ -14,3 +14,14 @@ test("GET /api/inventory return all inventory", async () => {
     expect(response.body[0]).toHaveProperty("quantity");
   }
 });
+
+test("POST /api/inventory create a new item", async () => {
+  const newItem = {
+    name: "laptop",
+    price: "700",
+    quantity: "8",
+  };
+
+  const response = await request(app).post("/api/inventory").send(newItem);
+  expect(response.status).toBe(201);
+});
