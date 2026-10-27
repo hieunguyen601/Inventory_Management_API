@@ -26,12 +26,36 @@ test("POST /api/inventory create a new item", async () => {
   expect(response.status).toBe(201);
 });
 
-
 test("PATCH /api/inventory:id updates an item", async () => {
-    const updatedQuantity = {
-        quantity: "30"
-    };
+  const updatedQuantity = {
+    quantity: "30",
+  };
 
-    const response = await request(app).patch("/api/inventory/9").send(updatedQuantity);
-    expect(response.status).toBe(200);
-})
+  const response = await request(app)
+    .patch("/api/inventory/9")
+    .send(updatedQuantity);
+  expect(response.status).toBe(200);
+});
+
+test("DELETE /api/inventory:id deletes an item", async () => {
+  const createResponse = await request(app).post("/api/inventory").send({
+    name: "Keyboard",
+    price: "89",
+    quantity: "45",
+  });
+
+  expect(createResponse.status).toBe(201);
+
+  const itemId = createResponse.body.data.id;
+
+  const deleteResponse = await request(app).delete(`/api/inventory/${itemId}`);
+  expect(deleteResponse.status).toBe(200);
+
+  const getResponse = await request(app).get(`/api/inventory/${itemId}`);
+  expect(getResponse.status).toBe(404);
+});
+
+test("DELETE returns 404 for nonexistent item", async () => {
+    const response = await request(app).delete("/api.inventory/99999")
+    expect(response.status).toBe(404);
+});
