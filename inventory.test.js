@@ -59,3 +59,12 @@ test("DELETE returns 404 for nonexistent item", async () => {
     const response = await request(app).delete("/api.inventory/99999")
     expect(response.status).toBe(404);
 });
+
+test("POST /api/signup to sign up new account", async () => {
+    const signupUser = await request(app).post("/api/signup").send({
+        email: "hotboylatao601@gmail.com",
+        password: "123456"
+    });
+
+    expect(signupUser.status).toBe(201);
+})
