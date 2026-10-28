@@ -18,8 +18,8 @@ test("GET /api/inventory return all inventory", async () => {
 test("POST /api/inventory create a new item", async () => {
   const newItem = {
     name: "laptop",
-    price: "700",
-    quantity: "8",
+    price: 685.20,
+    quantity: 8,
   };
 
   const response = await request(app).post("/api/inventory").send(newItem);
@@ -28,7 +28,7 @@ test("POST /api/inventory create a new item", async () => {
 
 test("PATCH /api/inventory:id updates an item", async () => {
   const updatedQuantity = {
-    quantity: "30",
+    quantity: 30,
   };
 
   const response = await request(app)
@@ -40,8 +40,8 @@ test("PATCH /api/inventory:id updates an item", async () => {
 test("DELETE /api/inventory:id deletes an item", async () => {
   const createResponse = await request(app).post("/api/inventory").send({
     name: "Keyboard",
-    price: "89",
-    quantity: "45",
+    price: 89,
+    quantity: 45,
   });
 
   expect(createResponse.status).toBe(201);

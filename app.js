@@ -5,15 +5,15 @@ import cors from "cors";
 const app = express();
 app.use(express.json());
 app.use(cors());
-
+dotenv.config();
 const { Pool } = pg;
 
 const pool = new Pool({
-  host: "localhost",
-  database: "inventory_management",
-  password: "123456",
-  port: "5432",
-  user: "postgres",
+  host: process.env.DB_LOCALHOST,
+  database: process.env.DB_DATABASE,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
 });
 
 app.post("/api/inventory", async (req, res) => {
