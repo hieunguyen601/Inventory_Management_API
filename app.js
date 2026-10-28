@@ -42,18 +42,17 @@ app.post("/api/signup", async (req, res) => {
 
     const user = result.rows[0];
     if (email === user.email) {
-        return res.status(409).json({
-            message: "Email is already taken. Please try again!"
-        })
+      return res.status(409).json({
+        message: "Email is already taken. Please try again!",
+      });
     }
-
   } catch (error) {
     console.error("Couldn't process the user information", error);
 
     if (error.code === "23505") {
-        res.status(409).json({
-            message: "Email is already registered"
-        })
+      res.status(409).json({
+        message: "Email is already registered",
+      });
     }
 
     res.status(500).json({

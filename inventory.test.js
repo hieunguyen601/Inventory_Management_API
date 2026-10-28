@@ -18,7 +18,7 @@ test("GET /api/inventory return all inventory", async () => {
 test("POST /api/inventory create a new item", async () => {
   const newItem = {
     name: "laptop",
-    price: 685.20,
+    price: 685.2,
     quantity: 8,
   };
 
@@ -56,15 +56,24 @@ test("DELETE /api/inventory:id deletes an item", async () => {
 });
 
 test("DELETE returns 404 for nonexistent item", async () => {
-    const response = await request(app).delete("/api.inventory/99999")
-    expect(response.status).toBe(404);
+  const response = await request(app).delete("/api.inventory/99999");
+  expect(response.status).toBe(404);
 });
 
 test("POST /api/signup to sign up new account", async () => {
-    const signupUser = await request(app).post("/api/signup").send({
-        email: "hotboylatao601@gmail.com",
-        password: "123456"
-    });
+  const signupUser = await request(app).post("/api/signup").send({
+    email: "hotboylatao601@gmail.com",
+    password: "123456",
+  });
 
-    expect(signupUser.status).toBe(201);
-})
+  expect(signupUser.status).toBe(201);
+});
+
+test("Post /api/signin to check sign in", async () => {
+  const signin = await request(app).post("/api/signin").send({
+    email: "hotboylatao601@gmail.com",
+    password: "123456",
+  });
+
+  expect(signin.status).toBe(200);
+});
